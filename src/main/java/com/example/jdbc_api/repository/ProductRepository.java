@@ -18,18 +18,16 @@ import java.util.stream.Collectors;
 @Repository
 public class ProductRepository {
     private final String sql = read("search.sql");
-    @Autowired
+    @Autowired // плохой вариант в поле, но пока задача разобраться с JdbcTemplate
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public List<Product> getProductName(String name) {
         Map<String, String> params = new HashMap<>();
         params.put("name", name);
-
-        List<Product> products = namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> {
+        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> {
             String productName = rs.getString("product_name");
             return new Product(productName);
         });
-        return products;
     }
 
     private static String read(String scriptFileName) {
