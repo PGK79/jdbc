@@ -67,7 +67,7 @@ VALUES ('2021-11-12', 6, 'scooter', 100000.00);
 INSERT INTO tables_for_task_two.ORDERS(date, customer_id, product_name, amount)
 VALUES ('2021-11-12', 7, 'butter', 200.50);
 
-INSERT INTO ttables_for_task_two.ORDERS(date, customer_id, product_name, amount)
+INSERT INTO tables_for_task_two.ORDERS(date, customer_id, product_name, amount)
 VALUES ('2022-10-12', 8, 'kettle', 8000.00);
 
 INSERT INTO tables_for_task_two.ORDERS(date, customer_id, product_name, amount)
