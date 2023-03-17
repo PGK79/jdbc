@@ -6,6 +6,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,17 +20,20 @@ import java.util.stream.Collectors;
 @Repository
 public class ProductRepository {
     private final String sql = read("search.sql");
-    @Autowired // плохой вариант в поле, но пока задача разобраться с JdbcTemplate
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    public ProductRepository(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     public List<Product> getProductName(String name) {
-        Map<String, String> params = new HashMap<>();
-        params.put("name", name);
-        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> {
-            String productName = rs.getString("product_name");
-            return new Product(productName);
-        });
-    }
+        var responseToRequest = entityManager.createNativeQuery(sql);
+        responseToRequest.setParameter("name", name);
+        return responseToRequest.getResultList();
+        }
+
 
     private static String read(String scriptFileName) {
         try (InputStream is = new ClassPathResource(scriptFileName).getInputStream();
