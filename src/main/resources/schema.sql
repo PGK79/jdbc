@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS task_two_tables;
+CREATE DATABASE IF NOT EXISTS tables_for_task_two;
 
-CREATE TABLE IF NOT EXISTS task_two_tables.CUSTOMERS
+CREATE TABLE IF NOT EXISTS tables_for_task_two.CUSTOMERS
 (
     id           int4 auto_increment not null PRIMARY KEY,
     name         varchar(20)         not null,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS task_two_tables.CUSTOMERS
     phone_number varchar(20)         not null
 );
 
-CREATE TABLE IF NOT EXISTS task_two_tables.ORDERS
+CREATE TABLE IF NOT EXISTS tables_for_task_two.ORDERS
 (
     id           int4 auto_increment    not null PRIMARY KEY,
     date         date                   not null,
